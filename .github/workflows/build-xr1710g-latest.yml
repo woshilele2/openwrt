@@ -69,7 +69,11 @@ jobs:
           test -f .config && cp .config "$GITHUB_WORKSPACE/artifacts/build.config" || true
           test -f build.log && cp build.log "$GITHUB_WORKSPACE/artifacts/build.log" || true
           if [ -d bin/targets/airoha/an7581 ]; then
-            find bin/targets/airoha/an7581 -maxdepth 1 -type f -exec cp -v {} "$GITHUB_WORKSPACE/artifacts/" +
+            for output in bin/targets/airoha/an7581/*; do
+              if [ -f "$output" ]; then
+                cp -v "$output" "$GITHUB_WORKSPACE/artifacts/"
+              fi
+            done
           fi
           ls -lh "$GITHUB_WORKSPACE/artifacts"
 
